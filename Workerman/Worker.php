@@ -304,12 +304,6 @@ class Worker
     protected static $_process = array();
     
     /**
-     * 要执行的文件
-     * @var array
-     */
-    protected static $_startFiles = array();
-    
-    /**
      * 运行所有worker实例
      * @return void
      */
@@ -380,6 +374,11 @@ class Worker
             {
                 self::$_maxUserNameLength = $user_name_length;
             }
+            // 监听端口
+            if(!defined('GLOBAL_START'))
+            {
+                $worker->listen();
+            }
         }
     }
     
@@ -388,39 +387,19 @@ class Worker
      */
     public static function runAllWorkers()
     {
-        // 只有一个start文件时执行run
-        if(count(self::$_startFiles) === 1)
+        if(!defined('GLOBAL_START'))
         {
-            // win不支持同一个页面执初始化多个worker
-            if(count(self::$_workers) > 1)
+            foreach(self::$_workers as $worker)
             {
-                echo "@@@multi workers init in one php file are not support@@@\r\n";
-            }
-            elseif(count(self::$_workers) <= 0)
-            {
-                exit("@@@no worker inited@@@\r\n\r\n");
-            }
-            
-            // 执行worker的run方法
-            reset(self::$_workers);
-            $worker = current(self::$_workers);
-            $worker->listen();
-            // 子进程阻塞在这里
-            $worker->run();
-            exit("@@@child exit@@@\r\n");
-        }
-        // 多个start文件则多进程打开
-        elseif(count(self::$_startFiles) > 1)
-        {
-            foreach(self::$_startFiles as $start_file)
-            {
-                self::openProcess($start_file);
+                $worker->run();
+                exit("@@@child exit@@@\n");
             }
         }
-        // 没有start文件提示错误
-        else
+        
+        // 加载所有Applications/*/start*.php，以便启动所有服务
+        foreach(glob(__DIR__.'/../Applications/*/start*.php') as $start_file)
         {
-            echo "@@@no worker inited@@@\r\n";
+            self::openProcess($start_file);
         }
     }
     
@@ -442,9 +421,8 @@ class Worker
         
         // 保存stdin句柄，用来探测子进程是否关闭
         $pipes = array();
-       
         // 打开子进程
-        $process= proc_open("php $start_file -q", $descriptorspec, $pipes);
+        $process= proc_open("php $start_file start -q", $descriptorspec, $pipes);
         
         // 打开stdout stderr 文件句柄
         $std_handler = fopen($std_file, 'a+');
@@ -507,7 +485,7 @@ class Worker
     {
         global $argv;
         // -q不打印
-        if(in_array('-q', $argv))
+        if(isset($argv[2]) && $argv[2] == '-q')
         {
             return;
         }
@@ -529,19 +507,12 @@ class Worker
      */
     public static function parseCommand()
     {
+        // 检查运行命令的参数
         global $argv;
-        foreach($argv as $file)
+        $start_file = $argv[0]; 
+        if(!isset($argv[1]) || $argv[1] != 'start')
         {
-            $ext = pathinfo($file, PATHINFO_EXTENSION );
-            if($ext !== 'php')
-            {
-                continue;
-            }
-            if(is_file($file))
-            {
-                self::$_startFiles[$file] = $file;
-                include_once $file;
-            }
+            exit("Usage: php yourfile.php start\n");
         }
     }
     
@@ -741,8 +712,7 @@ class Worker
     public function acceptConnection($socket)
     {
         // 获得客户端连接
-        $new_socket = stream_socket_accept($socket, 0);
-        
+        $new_socket = @stream_socket_accept($socket, 0);
         // 惊群现象，忽略
         if(false === $new_socket)
         {
