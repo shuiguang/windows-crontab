@@ -1,48 +1,57 @@
 <?php
-
+/**
+ * This file is part of workerman-crontab.
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the MIT-LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ * 待测试页面的代码
+ * @author shuiguang
+ * @link https://github.com/shuiguang/windows-crontab
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
+ */
 $admin_name = 'Browser';
 $admin_password = 'Browser';
 
 //cookie验证机制：cookie
 if(isset($_POST['admin_name']) && isset($_POST['admin_password']))
 {
-	if($_POST['admin_name'] == $admin_name && $_POST['admin_password'] == $admin_password)
-	{
-		setcookie('admin_name', $admin_name);
-	}else{
-		
-		if(!isset($_COOKIE['admin_name']) || !$_COOKIE['admin_name'])
-		{
-			die('access deny');
-		}
-	}
+    if($_POST['admin_name'] == $admin_name && $_POST['admin_password'] == $admin_password)
+    {
+        setcookie('admin_name', $admin_name);
+    }else{
+        
+        if(!isset($_COOKIE['admin_name']) || !$_COOKIE['admin_name'])
+        {
+            die('access deny');
+        }
+    }
 }else{
-	if(!isset($_COOKIE['admin_name']) || $_COOKIE['admin_name'])
-	{
-		die('access deny');
-	}
+    if(!isset($_COOKIE['admin_name']) || $_COOKIE['admin_name'])
+    {
+        die('access deny');
+    }
 }
 
 //session验证机制：
 session_start();
 if(isset($_POST['admin_name']) && isset($_POST['admin_password']))
 {
-	if($_POST['admin_name'] == $admin_name && $_POST['admin_password'] == $admin_password)
-	{
-		$_SESSION['admin'] = $admin_name;
-	}else{
-		if(!isset($_SESSION['admin']) || !$_SESSION['admin'])
-		{
-			die('access deny');
-		}
-	}
+    if($_POST['admin_name'] == $admin_name && $_POST['admin_password'] == $admin_password)
+    {
+        $_SESSION['admin'] = $admin_name;
+    }else{
+        if(!isset($_SESSION['admin']) || !$_SESSION['admin'])
+        {
+            die('access deny');
+        }
+    }
 }else{
-	if(!isset($_SESSION['admin']) || $_SESSION['admin'])
-	{
-		die('access deny');
-	}
+    if(!isset($_SESSION['admin']) || $_SESSION['admin'])
+    {
+        die('access deny');
+    }
 }
-
 
 sleep(1);
 $start_url = 'http://www.modulesoap.com/Jump.php';
@@ -59,13 +68,12 @@ $next_url = $start_url.'?'.http_build_query($params);
 
 if($id == 10)
 {
-	$response = 'finish';
-	
+    $response = 'finish';
+    
 }else{
 
-	$response = '<script type="text/javascript">setTimeout(function(){window.location.href="'.$next_url.'"}, 1000)</script>';
+    $response = '<script type="text/javascript">setTimeout(function(){window.location.href="'.$next_url.'"}, 1000)</script>';
 
 }
 
 echo $response;
-

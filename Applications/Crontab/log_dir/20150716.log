@@ -1,0 +1,19 @@
+<font color="green">[2015-07-16 16:21:11]正在执行php Browser.php -u http%3A%2F%2Fwww.modulesoap.com%2FJump.php%3Fkey%3Dtest%26id%3D7[auto_Browser.crontab:9]</font>
+<font color="green">[2015-07-16 16:21:12]正在执行php Browser.php -u http%3A%2F%2Fwww.modulesoap.com%2FJump.php%3Fkey%3Dtest%26id%3D7[auto_Browser.crontab:9]</font>
+网址http://www.modulesoap.com/Jump.php?key=test&id=7被锁定,锁定文件：auto_Browser.crontab.88458fc586cfa8ea73296c7d8a7377e9.lock
+正在请求：http://www.modulesoap.com/Jump.php?key=test&id=7,返回网址：http://www.modulesoap.com/Jump.php?key=test&id=8,当前时间1437034873
+<font color="green">[2015-07-16 16:21:14]正在执行php Browser.php -u http%3A%2F%2Fwww.modulesoap.com%2FJump.php%3Fkey%3Dtest%26id%3D8[auto_Browser.crontab:10]</font>
+正在请求：http://www.modulesoap.com/Jump.php?key=test&id=8,返回网址：http://www.modulesoap.com/Jump.php?key=test&id=9,当前时间1437034876
+<font color="green">[2015-07-16 16:21:17]正在执行php Browser.php -u http%3A%2F%2Fwww.modulesoap.com%2FJump.php%3Fkey%3Dtest%26id%3D9[auto_Browser.crontab:11]</font>
+正在请求：http://www.modulesoap.com/Jump.php?key=test&id=9,返回网址：http://www.modulesoap.com/Jump.php?key=test&id=10,当前时间1437034879
+<font color="green">[2015-07-16 16:21:19]正在执行php Browser.php -u http%3A%2F%2Fwww.modulesoap.com%2FJump.php%3Fkey%3Dtest%26id%3D10[auto_Browser.crontab:12]</font>
+正在请求：http://www.modulesoap.com/Jump.php?key=test&id=10,返回网址：,当前时间1437034881
+采集结束http://www.modulesoap.com/Jump.php?key=test&id=10,返回字符串：finish
+<font color="green">[2015-07-16 16:22:00]正在执行echo 'a' >> test.txt[a.crontab:3]</font>
+<font color="green">[2015-07-16 16:22:00]正在执行echo 'aca' >> test.txt[a.crontab:4]</font>
+<font color="green">[2015-07-16 16:23:00]正在执行echo 'a' >> test.txt[a.crontab:3]</font>
+<font color="green">[2015-07-16 16:23:00]正在执行echo 'aca' >> test.txt[a.crontab:4]</font>
+<font color="green">[2015-07-16 16:24:00]正在执行echo 'a' >> test.txt[a.crontab:3]</font>
+<font color="green">[2015-07-16 16:24:00]正在执行echo 'aca' >> test.txt[a.crontab:4]</font>
+<font color="green">[2015-07-16 16:25:00]正在执行echo 'a' >> test.txt[a.crontab:3]</font>
+<font color="green">[2015-07-16 16:25:00]正在执行echo 'aca' >> test.txt[a.crontab:4]</font>
